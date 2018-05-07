@@ -9,19 +9,19 @@
 ##' @examples
 ##' as.grob(~barplot(1:10))
 ##' @author guangchuang yu
-as.grob <- function(plot) {
+as.grob <- function(plot, envir) {
     UseMethod("as.grob")
 }
 
 ##' @rdname as-grob
 ##' @method as.grob expression
 ##' @export
-as.grob.expression <- function(plot) {
-    p <- tryCatch(base2grob(plot),
+as.grob.expression <- function(plot, envir) {
+    p <- tryCatch(base2grob(plot, envir),
                   error = function(e) NULL)
 
     if (is.null(p)) {
-        p <- grid::grid.grabExpr(plot_fun(plot)(), warn=0)
+        p <- grid::grid.grabExpr(plot_fun(plot, envir)(), warn=0)
     }
 
     return(p)
@@ -42,7 +42,7 @@ as.grob.function <- as.grob.expression
 ##' @importFrom ggplot2 ggplotGrob
 ##' @method as.grob ggplot
 ##' @export
-as.grob.ggplot <- function(plot) {
+as.grob.ggplot <- function(plot, envir) {
     ggplotGrob(plot)
 }
 
@@ -50,7 +50,7 @@ as.grob.ggplot <- function(plot) {
 ##' @importFrom rvcheck get_fun_from_pkg
 ##' @method as.grob meme
 ##' @export
-as.grob.meme <- function(plot) {
+as.grob.meme <- function(plot, envir) {
     memeGrob <- get_fun_from_pkg("meme", "memeGrob")
     memeGrob(plot)
 }
@@ -58,7 +58,7 @@ as.grob.meme <- function(plot) {
 ##' @rdname as-grob
 ##' @method as.grob trellis
 ##' @export
-as.grob.trellis <- function(plot) {
+as.grob.trellis <- function(plot, envir) {
     grid::grid.grabExpr(print(plot))
 }
 
@@ -72,7 +72,7 @@ as.grob.upset <- as.grob.trellis
 ##' @method as.grob magick-image
 ##' @importFrom grid rasterGrob
 ##' @export
-"as.grob.magick-image" <- function(plot) {
+"as.grob.magick-image" <- function(plot, envir) {
     rasterGrob(plot)
 }
 
@@ -80,7 +80,7 @@ as.grob.upset <- as.grob.trellis
 ##' @rdname as-grob
 ##' @method as.grob grob
 ##' @export
-as.grob.grob <- function(plot) {
+as.grob.grob <- function(plot, envir) {
     plot
 }
 
@@ -97,11 +97,11 @@ as.grob.grob <- function(plot) {
 ##' @examples
 ##' base2grob(~plot(rnorm(10)))
 ##' @author Guangchuang Yu
-base2grob <- function(x) {
+base2grob <- function(x, envir) {
     old.par=par(no.readonly=TRUE)
     on.exit(suppressWarnings(par(old.par, no.readonly=TRUE)))
 
-    grid.grabExpr(grid.echo(plot_fun(x)), warn=0)
+    grid.grabExpr(grid.echo(plot_fun(x, envir)), warn=0)
 }
 
 
