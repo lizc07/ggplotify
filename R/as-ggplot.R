@@ -13,7 +13,7 @@
 ##' @examples
 ##' as.ggplot(~barplot(1:10))
 ##' @author Guangchuang Yu
-as.ggplot <- function(plot, envir) {
+as.ggplot <- function(plot, envir = environment()) {
     ## plot_expr <- quo_name(enexpr(plot))
     ## if (is.null(plot)) {
     ##     plot <- as.grob(plot_expr)
