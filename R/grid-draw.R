@@ -1,11 +1,11 @@
 ##' @importFrom grid grid.draw
 ##' @method grid.draw expression
 ##' @export
-grid.draw.expression <- function(x, recording = TRUE, envir = environment()) {
+grid.draw.expression <- function(x, recording = TRUE) {
     old.par=par(no.readonly=TRUE)
     on.exit(suppressWarnings(par(old.par, no.readonly=TRUE)))
 
-    plot_fun(x, envir)()
+    plot_fun(x)()
 }
 
 ##' @method grid.draw formula
