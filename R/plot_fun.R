@@ -15,7 +15,7 @@ plot_fun <- function(x, envir) {
 
     function() {
         op <- set_par()
-        for(i in names(op){
+        for(i in names(op)){
             envir[[x]] <- op[[x]]
         }
         if (inherits(x, "function"))
