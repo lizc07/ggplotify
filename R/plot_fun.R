@@ -1,4 +1,4 @@
-plot_fun <- function(x) {
+plot_fun <- function(x, envir) {
     if (!inherits(x, "expression") &&
         !inherits(x, "formula")    &&
         !inherits(x, "function")) {
@@ -17,7 +17,7 @@ plot_fun <- function(x) {
         set_par()
         if (inherits(x, "function"))
             return(x())
-        eval(x)
+        eval(x, envir)
     }
 }
 
