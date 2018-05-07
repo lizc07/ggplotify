@@ -16,7 +16,7 @@ as.grob <- function(plot, envir) {
 ##' @rdname as-grob
 ##' @method as.grob expression
 ##' @export
-as.grob.expression <- function(plot, envir) {
+as.grob.expression <- function(plot, envir = environment()) {
     p <- tryCatch(base2grob(plot, envir),
                   error = function(e) NULL)
 
@@ -42,7 +42,7 @@ as.grob.function <- as.grob.expression
 ##' @importFrom ggplot2 ggplotGrob
 ##' @method as.grob ggplot
 ##' @export
-as.grob.ggplot <- function(plot, envir) {
+as.grob.ggplot <- function(plot, envir = environment()) {
     ggplotGrob(plot)
 }
 
@@ -50,7 +50,7 @@ as.grob.ggplot <- function(plot, envir) {
 ##' @importFrom rvcheck get_fun_from_pkg
 ##' @method as.grob meme
 ##' @export
-as.grob.meme <- function(plot, envir) {
+as.grob.meme <- function(plot, envir = environment()) {
     memeGrob <- get_fun_from_pkg("meme", "memeGrob")
     memeGrob(plot)
 }
@@ -58,7 +58,7 @@ as.grob.meme <- function(plot, envir) {
 ##' @rdname as-grob
 ##' @method as.grob trellis
 ##' @export
-as.grob.trellis <- function(plot, envir) {
+as.grob.trellis <- function(plot, envir = environment()) {
     grid::grid.grabExpr(print(plot))
 }
 
@@ -72,7 +72,7 @@ as.grob.upset <- as.grob.trellis
 ##' @method as.grob magick-image
 ##' @importFrom grid rasterGrob
 ##' @export
-"as.grob.magick-image" <- function(plot, envir) {
+"as.grob.magick-image" <- function(plot, envir = environment()) {
     rasterGrob(plot)
 }
 
@@ -80,7 +80,7 @@ as.grob.upset <- as.grob.trellis
 ##' @rdname as-grob
 ##' @method as.grob grob
 ##' @export
-as.grob.grob <- function(plot, envir) {
+as.grob.grob <- function(plot, envir = environment()) {
     plot
 }
 
@@ -97,7 +97,7 @@ as.grob.grob <- function(plot, envir) {
 ##' @examples
 ##' base2grob(~plot(rnorm(10)))
 ##' @author Guangchuang Yu
-base2grob <- function(x, envir) {
+base2grob <- function(x, envir = environment()) {
     old.par=par(no.readonly=TRUE)
     on.exit(suppressWarnings(par(old.par, no.readonly=TRUE)))
 
