@@ -13,7 +13,7 @@
 ##' @examples
 ##' as.ggplot(~barplot(1:10))
 ##' @author Guangchuang Yu
-as.ggplot <- function(plot) {
+as.ggplot <- function(plot, envir) {
     ## plot_expr <- quo_name(enexpr(plot))
     ## if (is.null(plot)) {
     ##     plot <- as.grob(plot_expr)
@@ -21,7 +21,7 @@ as.ggplot <- function(plot) {
 
     ggplot(data.frame(x = 0:1, y = 0:1), aes_(x = ~x, y = ~y)) +
         geom_blank() +
-        annotation_custom(as.grob(plot),
+        annotation_custom(as.grob(plot, envir),
                           xmin = -Inf, xmax = Inf,
                           ymin = -Inf, ymax = Inf) +
         theme_void()
