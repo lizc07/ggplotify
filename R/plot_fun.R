@@ -16,7 +16,7 @@ plot_fun <- function(x, envir) {
     function() {
         op <- set_par()
         for(i in names(op)){
-            envir[[x]] <- op[[x]]
+            envir[[i]] <- op[[i]]
         }
         if (inherits(x, "function"))
             return(x())
@@ -35,7 +35,6 @@ set_par <- function() {
     }
 
     ## https://github.com/wilkelab/cowplot/issues/69#issuecomment-318866413
-    tmp <- 
     par(xpd = NA, # switch off clipping, necessary to always see axis labels
         bg = "transparent", # switch off background to avoid obscuring adjacent plots
         oma = c(2, 2, 0, 0), # move plot to the right and up
