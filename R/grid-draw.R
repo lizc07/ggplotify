@@ -1,7 +1,7 @@
 ##' @importFrom grid grid.draw
 ##' @method grid.draw expression
 ##' @export
-grid.draw.expression <- function(x, recording = TRUE, envir) {
+grid.draw.expression <- function(x, recording = TRUE, envir = environment()) {
     old.par=par(no.readonly=TRUE)
     on.exit(suppressWarnings(par(old.par, no.readonly=TRUE)))
 
